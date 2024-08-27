@@ -1,0 +1,125 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local background = Instance.new("ImageLabel")
+local PlayerNameTextBox = Instance.new("TextBox")
+local StartButton = Instance.new("TextButton")
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+background.Name = "background"
+background.Parent = ScreenGui
+background.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+background.BorderColor3 = Color3.fromRGB(0, 0, 0)
+background.BorderSizePixel = 3
+background.Position = UDim2.new(0.362850606, 0, 0.388128042, 0)
+background.Size = UDim2.new(0, 335, 0, 155)
+background.Image = "http://www.roblox.com/asset/?id=7120897383"
+
+PlayerNameTextBox.Name = "PlayerNameTextBox"
+PlayerNameTextBox.Parent = background
+PlayerNameTextBox.BackgroundColor3 = Color3.fromRGB(77, 77, 77)
+PlayerNameTextBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+PlayerNameTextBox.BorderSizePixel = 0
+PlayerNameTextBox.Position = UDim2.new(0, 0, 0.43225807, 0)
+PlayerNameTextBox.Size = UDim2.new(0, 335, 0, 20)
+PlayerNameTextBox.ZIndex = 10
+PlayerNameTextBox.Font = Enum.Font.Unknown
+PlayerNameTextBox.Text = "Type Nigga Name"
+PlayerNameTextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+PlayerNameTextBox.TextSize = 14.000
+
+StartButton.Name = "StartButton"
+StartButton.Parent = background
+StartButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+StartButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+StartButton.BorderSizePixel = 0
+StartButton.Position = UDim2.new(0.307462692, 0, 0.741935492, 0)
+StartButton.Size = UDim2.new(0, 130, 0, 25)
+StartButton.ZIndex = 10
+StartButton.Font = Enum.Font.Unknown
+StartButton.Text = "Dont cry"
+StartButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+StartButton.TextSize = 14.000
+
+TextLabel.Parent = background
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Size = UDim2.new(0, 335, 0, 22)
+TextLabel.Font = Enum.Font.Unknown
+TextLabel.Text = "Annoy niggas"
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextSize = 14.000
+
+-- Scripts:
+
+local function FQZVYWW_fake_script() -- StartButton.LocalScript 
+	local script = Instance.new('LocalScript', StartButton)
+
+	-- LocalScript inside the TextButton
+	local textBox = script.Parent.Parent:WaitForChild("PlayerNameTextBox")
+	local button = script.Parent
+	local runService = game:GetService("RunService")
+	
+	local function teleportUnanchoredPartsToPlayer(playerName)
+		local targetPlayer = nil
+	
+		-- Search for the player by display name or username
+		for _, player in ipairs(game.Players:GetPlayers()) do
+			if player.DisplayName == playerName or player.Name == playerName then
+				targetPlayer = player
+				break
+			end
+		end
+	
+		if targetPlayer then
+			local character = targetPlayer.Character or targetPlayer.CharacterAdded:Wait()
+	
+			local function teleportParts()
+				for _, part in ipairs(workspace:GetDescendants()) do
+					if part:IsA("BasePart") and not part.Anchored then
+						part.CFrame = character.HumanoidRootPart.CFrame
+					end
+				end
+			end
+	
+			-- Initial teleport
+			teleportParts()
+	
+			-- Continuously teleport unanchored parts to the player
+			runService.Stepped:Connect(function()
+				teleportParts()
+			end)
+		else
+			warn("Player not found!")
+		end
+	end
+	
+	-- Button click event
+	button.MouseButton1Click:Connect(function()
+		local playerName = textBox.Text
+		if playerName and playerName ~= "" then
+			teleportUnanchoredPartsToPlayer(playerName)
+		else
+			warn("Please enter a valid player name.")
+		end
+	end)
+	
+end
+coroutine.wrap(FQZVYWW_fake_script)()
+local function NRFQJ_fake_script() -- background.LocalScript 
+	local script = Instance.new('LocalScript', background)
+
+	local s = script.Parent.Parent.background
+	s.Draggable = true
+	s.Active = true
+end
+coroutine.wrap(NRFQJ_fake_script)()
